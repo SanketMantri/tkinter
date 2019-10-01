@@ -69,7 +69,7 @@ def register_user():
     username_info = username_entry.get()
     password_info = password_entry.get()
 
-    file = open("usernamedb", 'w')
+    file = open(username_info, 'w')
 
     file.write(username_info + "\n")
     file.write(password_info)
