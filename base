@@ -98,6 +98,4 @@ def close_window():
 def add_delay(screen_name,time):
     screen_name.after(time)
 
-
-
 main_account_screen()  # call the main_account_screen() function
