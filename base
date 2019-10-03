@@ -83,9 +83,6 @@ def register_user():
     # set a label for showing success information on screen
 
     Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-    add_delay(register_screen,2000)
-    register_screen.destroy()
-
 def login():
     global login_screen
     login_screen = Tk()
@@ -109,33 +106,39 @@ def login():
     password_login_entry = Entry(login_screen,textvariable=password_verify,show='*')
     password_login_entry.pack()
     add_space(login_screen)
-    Button(login_screen,text="Exit",height="2",width="30",command=close_window(login_screen)).pack()
+    Button(login_screen, text='Login', height="2", width="30", command=login_verify).pack()
 
 def login_verify():
-    login_username = username_verify.get()
-    login_password = password_verify.get()
+    global login_username
+    global login_password
+    login_username = username_login_entry.get()
+    login_password = password_login_entry.get()
+    print(login_username)
 
     username_login_entry.delete(0,END)
     password_login_entry.delete(0,END)
-
+    print(login_username)
     list_of_files = os.listdir()
+    print(list_of_files)
     if login_username in list_of_files:
         file1 = open(login_username,'r')
         verify = file1.read().splitlines()
         if login_password in verify:
             login_success()
-        else password_not_recognised()
-    else user_not_found()
+        else:
+            password_not_recognised()
+    else:
+        user_not_found()
 
 def login_success():
     global login_success_screen  # make login_success_screen global
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
     login_success_screen.geometry("150x100")
-    Label(login_success_screen, text="Login Success").pack()
+    Label(login_success_screen, text="Welcome  "+login_username).pack()
 
     # create OK button
-    Button(login_success_screen, text="OK", command=close_window(login_success_screen)).pack()
+    Button(login_success_screen, text="OK", command=close_login_success_screen).pack()
 
 def password_not_recognised():
     global password_not_recog_screen
@@ -143,12 +146,23 @@ def password_not_recognised():
     password_not_recog_screen.title("Success")
     password_not_recog_screen.geometry("150x100")
     Label(password_not_recog_screen, text="Invalid Password ").pack()
-    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pac
+    Button(password_not_recog_screen, text="OK", command=close_password_not_recognised).pack()
 
 def user_not_found():
+    global user_not_found_screen
+    user_not_found_screen = Toplevel(login_screen)
+    user_not_found_screen.title("Success")
+    user_not_found_screen.geometry("150x100")
+    Label(user_not_found_screen, text="User Not Found").pack()
+    Label(user_not_found_screen, text="Try again latter").pack()
+    Button(user_not_found_screen, text="OK",command=close_user_not_found).pack()
 
-def close_window(screen_name):
-    screen_name.destroy()
+def close_login_success_screen():
+    login_success_screen.destroy()
+def close_password_not_recognised():
+    password_not_recog_screen.destroy()
+def close_user_not_found():
+    user_not_found_screen.destroy()
 
 def add_delay(screen_name,time):
     screen_name.after(time)
