@@ -7,12 +7,10 @@ main_screen = Tk()
 def main_account_screen():
     main_screen.geometry("300x250")
     main_screen.title("Account_Login")
-
     # Define title
     title = Label(text="Choose login or register", bg="blue", width="300", height="2", font=("Calibiri", 13))
     title.pack()
     Label(text="").pack()  # Blank labels to add spaces
-
     # Login Button
     Button(text="Login", height="2", width="30",command=login).pack()
     Label(text="").pack()
